@@ -33,7 +33,6 @@ export default function PerformancePage() {
     .sort((a,b) => (b as unknown as Record<string,number>)[sort] - (a as unknown as Record<string,number>)[sort]);
 
   const avgOTD = (suppliers.reduce((s,x) => s+x.otd, 0) / suppliers.length).toFixed(1);
-  const avgQuality = (suppliers.reduce((s,x) => s+x.quality, 0) / suppliers.length).toFixed(1);
   const avgSQ = (suppliers.reduce((s,x) => s+x.sq, 0) / suppliers.length).toFixed(1);
   const totalSpend = suppliers.reduce((s,x) => s+x.spend, 0).toFixed(1);
 
@@ -48,11 +47,10 @@ export default function PerformancePage() {
       </div>
 
       {/* KPIs */}
-      <div style={{ display:"grid", gridTemplateColumns:"repeat(5,1fr)", gap:12, marginBottom:24 }}>
+      <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:12, marginBottom:24 }}>
         {[
           { label:"Total Spend YTD", value:`${totalSpend}M NOK`, icon:TrendingUp, color:"#0070f3" },
           { label:"Avg OTD", value:`${avgOTD}%`, icon:Gauge, color:Number(avgOTD)>90?"#16a34a":"#d97706" },
-          { label:"Avg Quality", value:`${avgQuality}%`, icon:Star, color:Number(avgQuality)>95?"#16a34a":"#d97706" },
           { label:"Avg SQ Score", value:`${avgSQ}%`, icon:Shield, color:"#7c3aed" },
           { label:"Certs Expiring Soon", value:String(expiringSoon.length), icon:AlertTriangle, color:expiringSoon.length>0?"#dc2626":"#16a34a" },
         ].map(k => (
@@ -79,7 +77,6 @@ export default function PerformancePage() {
           style={{ padding:"6px 12px", borderRadius:8, border:"1px solid #e2e8f0", fontSize:12, cursor:"pointer", background:"white" }}>
           <option value="spend">Sort: Spend</option>
           <option value="otd">Sort: OTD</option>
-          <option value="quality">Sort: Quality</option>
           <option value="sq">Sort: SQ Score</option>
         </select>
       </div>
@@ -89,7 +86,7 @@ export default function PerformancePage() {
         <div style={{ overflowX:"auto" }}>
           <table style={{ width:"100%", borderCollapse:"collapse", fontSize:12 }}>
             <thead><tr style={{ background:"#f8fafc" }}>
-              {["Supplier","Spend MNOK","SQ","OTD %","Quality %","QM Cert","Env Cert","H&S","Cyber","Risk","Trend"].map(h =>
+              {["Supplier","Spend MNOK","SQ","OTD %","QM Cert","Env Cert","H&S","Risk","Trend"].map(h =>
                 <th key={h} style={{ padding:"10px 12px", textAlign:"left", color:"#64748b", fontWeight:600, whiteSpace:"nowrap" }}>{h}</th>
               )}
             </tr></thead>
@@ -99,11 +96,9 @@ export default function PerformancePage() {
                 <td style={{ padding:"10px 12px", fontWeight:700 }}>{s.spend}</td>
                 <td style={{ padding:"10px 12px" }}><span style={{ color:s.sq>=90?"#16a34a":s.sq>=80?"#d97706":"#dc2626", fontWeight:700 }}>{s.sq}%</span></td>
                 <td style={{ padding:"10px 12px" }}><span style={{ color:s.otd>=90?"#16a34a":s.otd>=80?"#d97706":"#dc2626", fontWeight:700 }}>{s.otd}%</span></td>
-                <td style={{ padding:"10px 12px" }}><span style={{ color:s.quality>=95?"#16a34a":"#d97706", fontWeight:700 }}>{s.quality}%</span></td>
                 <td style={{ padding:"10px 12px" }}><CertBadge type={s.certQM} exp={s.certQMExp} /></td>
                 <td style={{ padding:"10px 12px" }}><CertBadge type={s.certEnv} exp={s.certEnvExp} /></td>
                 <td style={{ padding:"10px 12px" }}><CertBadge type={s.certH} exp={s.certHExp} /></td>
-                <td style={{ padding:"10px 12px" }}><span style={{ fontSize:11, color:s.cyber==="NO"?"#94a3b8":"#475569" }}>{s.cyber}</span></td>
                 <td style={{ padding:"10px 12px" }}><span style={{ fontSize:11, fontWeight:600, color:riskColor(s.risk), background:`${riskColor(s.risk)}18`, padding:"2px 8px", borderRadius:999 }}>{s.risk}</span></td>
                 <td style={{ padding:"10px 12px" }}>{trendIcon(s.trend)}</td>
               </tr>
