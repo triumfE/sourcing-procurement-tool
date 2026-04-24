@@ -21,9 +21,9 @@ const mockRFQs = [
 const mockEval = {
   rfq: "RFQ-2026-041", title:"Propeller hub casting GX4CrNiMo16",
   suppliers: [
-    { name:"Bjorneborg Steel AB", country:"🇸🇪", price:385000, currency:"NOK", leadTime:"12w", freight:8500, tooling:0, sq:100, otd:88, risk:"low", sustainability:"A", moq:5, total:393500, rank:2, savings:"+2.1%" },
-    { name:"Nordic Castings Group", country:"🇸🇪", price:372000, currency:"NOK", leadTime:"14w", freight:6200, tooling:15000, sq:95, otd:92, risk:"low", sustainability:"B+", moq:3, total:393200, rank:1, savings:"+2.2%" },
-    { name:"Kaiping Yuanhang", country:"🇨🇳", price:265000, currency:"NOK", leadTime:"16w+6w freight", freight:42000, tooling:0, sq:98.8, otd:94, risk:"medium", sustainability:"C", moq:10, total:307000, rank:3, savings:"+23.7%" },
+    { name:"Bjorneborg Steel AB", country:"🇸🇪", price:385000, currency:"NOK", leadTime:"12w", freight:8500, tooling:0, risk:"low", sustainability:"A", moq:5, total:393500, rank:2, savings:"+2.1%" },
+    { name:"Nordic Castings Group", country:"🇸🇪", price:372000, currency:"NOK", leadTime:"14w", freight:6200, tooling:15000, risk:"low", sustainability:"B+", moq:3, total:393200, rank:1, savings:"+2.2%" },
+    { name:"Kaiping Yuanhang", country:"🇨🇳", price:265000, currency:"NOK", leadTime:"16w+6w freight", freight:42000, tooling:0, risk:"medium", sustainability:"C", moq:10, total:307000, rank:3, savings:"+23.7%" },
   ],
   currentPrice: 402000,
 };
@@ -182,8 +182,6 @@ export default function RfqPage() {
                     {l:"vs Current (402,000)",v:["+2.1%","+2.2%","+23.7%"],green:true},
                     {l:"Lead Time",v:["12 weeks","14 weeks","22 weeks"]},
                     {l:"MOQ",v:["5 pcs","3 pcs","10 pcs"]},
-                    {l:"SQ Score",v:["100%","95%","98.8%"]},
-                    {l:"OTD",v:["88%","92%","94%"]},
                     {l:"Risk",v:["Low","Low","Medium"]},
                     {l:"Sustainability",v:["A","B+","C"]},
                   ].map(row => (

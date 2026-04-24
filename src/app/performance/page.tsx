@@ -25,15 +25,13 @@ const expiringSoon = suppliers.filter(s => {
 
 export default function PerformancePage() {
   const [search, setSearch] = useState("");
-  const [sort, setSort] = useState<"spend"|"sq"|"otd"|"quality">("spend");
+  const [sort, setSort] = useState<"spend">("spend");
   const [view, setView] = useState<"table"|"cards">("table");
 
   const filtered = suppliers
     .filter(s => !search || s.name.toLowerCase().includes(search.toLowerCase()))
     .sort((a,b) => (b as unknown as Record<string,number>)[sort] - (a as unknown as Record<string,number>)[sort]);
 
-  const avgOTD = (suppliers.reduce((s,x) => s+x.otd, 0) / suppliers.length).toFixed(1);
-  const avgSQ = (suppliers.reduce((s,x) => s+x.sq, 0) / suppliers.length).toFixed(1);
   const totalSpend = suppliers.reduce((s,x) => s+x.spend, 0).toFixed(1);
 
   return (
@@ -47,11 +45,10 @@ export default function PerformancePage() {
       </div>
 
       {/* KPIs */}
-      <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:12, marginBottom:24 }}>
+      <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:12, marginBottom:24 }}>
         {[
           { label:"Total Spend YTD", value:`${totalSpend}M NOK`, icon:TrendingUp, color:"#0070f3" },
-          { label:"Avg OTD", value:`${avgOTD}%`, icon:Gauge, color:Number(avgOTD)>90?"#16a34a":"#d97706" },
-          { label:"Avg SQ Score", value:`${avgSQ}%`, icon:Shield, color:"#7c3aed" },
+          { label:"Active Suppliers", value:String(suppliers.length), icon:Shield, color:"#7c3aed" },
           { label:"Certs Expiring Soon", value:String(expiringSoon.length), icon:AlertTriangle, color:expiringSoon.length>0?"#dc2626":"#16a34a" },
         ].map(k => (
           <div key={k.label} style={{ background:"white", border:"1px solid #e2e8f0", borderRadius:10, padding:"14px 16px" }}>
@@ -76,8 +73,6 @@ export default function PerformancePage() {
         <select value={sort} onChange={e=>setSort(e.target.value as typeof sort)}
           style={{ padding:"6px 12px", borderRadius:8, border:"1px solid #e2e8f0", fontSize:12, cursor:"pointer", background:"white" }}>
           <option value="spend">Sort: Spend</option>
-          <option value="otd">Sort: OTD</option>
-          <option value="sq">Sort: SQ Score</option>
         </select>
       </div>
 
@@ -86,7 +81,7 @@ export default function PerformancePage() {
         <div style={{ overflowX:"auto" }}>
           <table style={{ width:"100%", borderCollapse:"collapse", fontSize:12 }}>
             <thead><tr style={{ background:"#f8fafc" }}>
-              {["Supplier","Spend MNOK","SQ","OTD %","QM Cert","Env Cert","H&S","Risk","Trend"].map(h =>
+              {["Supplier","Spend MNOK","QM Cert","Env Cert","H&S","Risk","Trend"].map(h =>
                 <th key={h} style={{ padding:"10px 12px", textAlign:"left", color:"#64748b", fontWeight:600, whiteSpace:"nowrap" }}>{h}</th>
               )}
             </tr></thead>
@@ -94,8 +89,6 @@ export default function PerformancePage() {
               <tr key={s.id} style={{ borderTop:"1px solid #f1f5f9", background:i%2===0?"white":"#fafbfc" }}>
                 <td style={{ padding:"10px 12px", fontWeight:600, color:"#0f172a", whiteSpace:"nowrap" }}>{s.name}</td>
                 <td style={{ padding:"10px 12px", fontWeight:700 }}>{s.spend}</td>
-                <td style={{ padding:"10px 12px" }}><span style={{ color:s.sq>=90?"#16a34a":s.sq>=80?"#d97706":"#dc2626", fontWeight:700 }}>{s.sq}%</span></td>
-                <td style={{ padding:"10px 12px" }}><span style={{ color:s.otd>=90?"#16a34a":s.otd>=80?"#d97706":"#dc2626", fontWeight:700 }}>{s.otd}%</span></td>
                 <td style={{ padding:"10px 12px" }}><CertBadge type={s.certQM} exp={s.certQMExp} /></td>
                 <td style={{ padding:"10px 12px" }}><CertBadge type={s.certEnv} exp={s.certEnvExp} /></td>
                 <td style={{ padding:"10px 12px" }}><CertBadge type={s.certH} exp={s.certHExp} /></td>

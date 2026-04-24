@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Gauge, DollarSign, AlertTriangle, FolderOpen, Zap, Shield, Lock, ArrowRight, TrendingUp, TrendingDown, Check, Users, BarChart2, Star, ChevronRight } from "lucide-react";
 
 const modules = [
-  { href:"/performance", icon:Gauge, title:"Supplier Performance", desc:"Track OTD, quality, SQ scores and certifications across your entire supplier base. Automated scorecards and expiry alerts.", color:"#0070f3", metrics:["92% avg OTD","96% quality","5 certs expiring"] },
+  { href:"/performance", icon:Gauge, title:"Supplier Performance", desc:"Track certifications, compliance, spend and risk across your entire supplier base. Automated expiry alerts and contract management.", color:"#0070f3", metrics:["127 suppliers","10 certs expiring","Spend tracking"] },
   { href:"/cost-analysis", icon:DollarSign, title:"AI Cost Analysis", desc:"Validate supplier price increases against real market data — LME, MEPS, energy, FX and freight indices. AI-powered recommendations.", color:"#16a34a", metrics:["4 active claims","$2.1M savings identified","62% partially justified"] },
   { href:"/risk", icon:AlertTriangle, title:"Risk Monitor", desc:"Concentration risk, financial distress, geopolitical exposure, certification gaps and ESG compliance. Early warnings before issues become critical.", color:"#dc2626", metrics:["2 high severity","6 active risks","8 countries monitored"] },
   { href:"/documents", icon:FolderOpen, title:"Document Hub", desc:"Centralized storage for contracts, NDAs, certificates, price lists, audit reports. Minutes of Meeting, action lists and follow-up tracking.", color:"#7c3aed", metrics:["Contract management","NDA tracking","Audit trail"] },
@@ -13,7 +13,6 @@ const modules = [
 
 const kpis = [
   { label:"Suppliers Tracked", value:"127", trend:"+8", up:true },
-  { label:"Avg OTD", value:"92.4%", trend:"+1.2%", up:true },
   { label:"Open Claims", value:"4", trend:"-2", up:false },
   { label:"Active Risks", value:"6", trend:"+1", up:true },
   { label:"Cost Savings YTD", value:"$2.1M", trend:"+340K", up:true },
@@ -55,7 +54,7 @@ export default function Home() {
       </div>
 
       {/* KPIs */}
-      <div style={{ display:"grid", gridTemplateColumns:"repeat(6,1fr)", gap:10, marginBottom:28 }}>
+      <div style={{ display:"grid", gridTemplateColumns:"repeat(5,1fr)", gap:10, marginBottom:28 }}>
         {kpis.map(k => (
           <div key={k.label} style={{ background:"white", border:"1px solid #e2e8f0", borderRadius:12, padding:"14px 16px" }}>
             <div style={{ fontSize:11, color:"#94a3b8", marginBottom:4 }}>{k.label}</div>
