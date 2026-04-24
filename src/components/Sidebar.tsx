@@ -7,7 +7,6 @@ const nav = [
   { href: "/performance", label: "Supplier Performance", icon: Gauge },
   { href: "/cost-analysis", label: "AI Cost Analysis", icon: DollarSign },
   { href: "/risk", label: "Risk Monitor", icon: AlertTriangle },
-  { href: "/market", label: "Market Intelligence", icon: TrendingUp },
   { href: "/documents", label: "Document Hub", icon: FolderOpen },
   { href: "/rfq", label: "RFQ Engine", icon: Zap },
   { href: "/naval", label: "Naval & Defence", icon: Shield, locked: true },
